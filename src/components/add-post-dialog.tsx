@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,16 +11,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Textarea } from "./ui/textarea";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useMutationPosts from "@/hooks/use-mutation-posts";
 import { useToast } from "@/components/ui/use-toast";
-import { Textarea } from "./ui/textarea";
-
+import { useStore } from "@/lib/store";
 
 export const AddPostDialog = () => {
   const [content, setContent] = useState("");
   const { addNewPost } = useMutationPosts();
   const { toast } = useToast();
+  const user = useStore((state) => state.user);   // state hook to retrieve the current user's data using Zustand's useStore
 
   const handleSave = async () => {
     if (!content) {
@@ -49,34 +51,49 @@ export const AddPostDialog = () => {
         <DialogHeader>
           <DialogTitle>Add Post</DialogTitle>
           <DialogDescription>
-            Provide the content of your post here.
+            {user
+              ? "Provide the content of your post here."
+              : "Please login to make a post."}
           </DialogDescription>
         </DialogHeader>
-        <div className="grid content-center gap-4 py-4">
-          <div className="grid content-center grid-cols-4 gap-4">
-            <Textarea
-              id="content"
-              value={content}
-              className="content-center col-span-3"
-              onChange={(e) => {
-                setContent(e.target.value);
-              }}
-            />
+        {user && (
+          <div className="grid gap-4 py-4">
+            <div className="grid items-center grid-cols-4 gap-4">
+              <Textarea
+                id="content"
+                value={content}
+                className="col-span-4"
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <DialogFooter>
-          <DialogClose asChild>
-            <Button variant={"secondary"} type="reset" onClick={handleCancel}>
-              Cancel
-            </Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button type="submit" onClick={handleSave}>
-              Save
-            </Button>
-          </DialogClose>
+          {!user && (
+            <DialogClose asChild>
+              <Button>Okay</Button>
+            </DialogClose>
+          )}
+          {user && (
+            <DialogClose asChild>
+              <Button variant={"secondary"} type="reset" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </DialogClose>
+          )}
+          {user && (
+            <DialogClose asChild>
+              <Button type="submit" onClick={handleSave}>
+                Save
+              </Button>
+            </DialogClose>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
+  // dialog is conditionally rendered based on whether the user is authenticated or not 
+  // notice the user && adn !user && statements
 };
