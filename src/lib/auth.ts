@@ -1,15 +1,19 @@
+import { jwtDecode } from "jwt-decode";
 import { User } from "./types";
 
-// Hardcoded authenticated user data for Edsger Dijkstra
-const authenticatedUser: User = {
-  id: "u1",
-  userName: "edsger",
-  displayName: "Edsger Dijkstra",
-  avatar: "edsger-dijkstra.webp",
+// Get the user by decoding the token from local storage
+export const getAuthenticatedUser = (): User => {
+  const token = localStorage.getItem("token") as string;
+  const decodedToken = jwtDecode<User>(token);
+  return decodedToken;
 };
 
-export const getAuthenticatedUser = (): User => {
-  // For now, this simply returns the hardcoded user.
-  // In the future, this can be replaced with actual authentication logic.
-  return authenticatedUser;
+// Get the token from local storage
+export const getAuthenticatedUserToken = (): string | null => {
+  return localStorage.getItem("token");
+};
+
+// Store the token in local storage
+export const storeAuthenticatedUserToken = (token: string): void => {
+  localStorage.setItem("token", token);
 };

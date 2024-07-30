@@ -10,11 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useMutationPosts from "@/hooks/use-mutation-posts";
 import { useToast } from "@/components/ui/use-toast";
+import { Textarea } from "./ui/textarea";
 
 
 export const AddPostDialog = () => {
@@ -33,7 +32,7 @@ export const AddPostDialog = () => {
     }
     await addNewPost(content);
     setContent("");
-  };  
+  };
 
   const handleCancel = () => {
     setContent("");
@@ -46,22 +45,19 @@ export const AddPostDialog = () => {
           <PlusCircledIcon className="w-5 h-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
           <DialogTitle>Add Post</DialogTitle>
           <DialogDescription>
             Provide the content of your post here.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid items-center grid-cols-4 gap-4">
-            <Label htmlFor="title" className="text-right">
-              Content
-            </Label>
-            <Input
+        <div className="grid content-center gap-4 py-4">
+          <div className="grid content-center grid-cols-4 gap-4">
+            <Textarea
               id="content"
               value={content}
-              className="col-span-3"
+              className="content-center col-span-3"
               onChange={(e) => {
                 setContent(e.target.value);
               }}

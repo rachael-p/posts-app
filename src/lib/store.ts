@@ -1,24 +1,27 @@
-import { Post, PostWithUserData } from "./types";
+import { PostWithUserData, User } from "./types";
 import { log } from "./logger";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { getAuthenticatedUser } from "./auth";
 
 type State = {
   posts: PostWithUserData[];
+  user: User | null;
   // Add more state variables
 };
 
 type Action = {
   setPosts: (posts: PostWithUserData[]) => void;
   removePost: (id: string) => void;
-  addPost: (post: Post) => void;
+  addPost: (post: PostWithUserData) => void;
+  setUser: (user: User) => void;
+  clearUser: () => void;
   // Add more actions
 };
 
 // define the initial state
 const initialState: State = {
   posts: [],
+  user: null,
 };
 
 export const useStore = create<State & Action>()(
@@ -36,15 +39,12 @@ export const useStore = create<State & Action>()(
     },
 
     addPost: (post) => {
-        const user = getAuthenticatedUser();
-        const newPost: PostWithUserData = {
-          ...post,
-          user,
-        };
-        const newPosts = [newPost, ...get().posts];
-        set({ posts: newPosts });
-      },
-      
+      set({ posts: [post, ...get().posts] });
+    },    
+
+    setUser: (user) => set({ user }),
+
+    clearUser: () => set({ user: null }),
       
   }))
 );

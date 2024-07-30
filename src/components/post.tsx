@@ -8,7 +8,7 @@ const Post = ({ post }: { post: PostWithUserData; }) => {
 
     // The code below uses Optional Chaining (?.) and Nullish Coalescing (??)
   const displayName = user?.displayName ?? "Unknown";
-  const userName = user?.userName ?? "Unknown";
+  const username = user?.username ?? "Unknown";
   const avatar = user?.avatar;
 
   return (
@@ -19,7 +19,7 @@ const Post = ({ post }: { post: PostWithUserData; }) => {
       <div className="w-full pt-4 pr-4">
         <PostHeader
           name={displayName}
-          username={userName}
+          username={username}
           timestamp={timestamp}
         />
         <div className="my-4">{content}</div>

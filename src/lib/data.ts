@@ -2,20 +2,20 @@ import type { Like, Post, User, Comment } from "./types";
   
   export const users: User[] = [
     {
-      id: "u1",
-      userName: "edsger",
+      id: 1,
+      username: "edsger",
       displayName: "Edsger Dijkstra",
       avatar: "edsger-dijkstra.webp",
     },
     {
-      id: "u2",
-      userName: "donald",
+      id: 2,
+      username: "donald",
       displayName: "Donald Knuth",
       avatar: "donald-knuth.webp",
     },
     {
-      id: "u3",
-      userName: "grace",
+      id: 3,
+      username: "grace",
       displayName: "Grace Hopper",
       avatar: "grace-hopper.webp",
     },
@@ -24,7 +24,7 @@ import type { Like, Post, User, Comment } from "./types";
   export const posts: Post[] = [
     {
       id: "p1",
-      userId: "u1",
+      userId: 1,
       content: "Do only what only you can do.",
       timestamp: "2023-07-24T12:00:00Z",
       likeCount: 2,
@@ -32,7 +32,7 @@ import type { Like, Post, User, Comment } from "./types";
     },
     {
       id: "p2",
-      userId: "u1",
+      userId: 1,
       content: "Elegance is not a dispensable luxury but a factor that decides between success and failure.",
       timestamp: "2023-07-23T12:00:00Z",
       likeCount: 1,
@@ -40,7 +40,7 @@ import type { Like, Post, User, Comment } from "./types";
     },
     {
       id: "p3",
-      userId: "u2",
+      userId: 2,
       content: "Beware of bugs in the above code; I have only proved it correct, not tried it.",
       timestamp: "2023-07-22T12:00:00Z",
       likeCount: 1,
@@ -48,7 +48,7 @@ import type { Like, Post, User, Comment } from "./types";
     },
     {
       id: "p4",
-      userId: "u2",
+      userId: 2,
       content: "Science is what we understand well enough to explain to a computer, Art is all the rest.",
       timestamp: "2023-07-21T12:00:00Z",
       likeCount: 2,
@@ -56,7 +56,7 @@ import type { Like, Post, User, Comment } from "./types";
     },
     {
       id: "p5",
-      userId: "u3",
+      userId: 3,
       content: "The most damaging phrase in the language is: 'It's always been done this way.'",
       timestamp: "2023-07-20T12:00:00Z",
       likeCount: 2,
@@ -64,7 +64,7 @@ import type { Like, Post, User, Comment } from "./types";
     },
     {
       id: "p6",
-      userId: "u3",
+      userId: 3,
       content: "To me programming is more than an important practical art. It is also a gigantic undertaking in the foundations of knowledge.",
       timestamp: "2023-07-19T12:00:00Z",
       likeCount: 1,

@@ -1,13 +1,13 @@
 export type User = {
-    id: string;
-    userName: string;
+    id: number;
+    username: string;
     displayName: string;
     avatar?: string;
   };
   
   export type Post = {
     id: string;
-    userId: string;
+    userId: number;
     content: string;
     timestamp: string;
     image?: string;
