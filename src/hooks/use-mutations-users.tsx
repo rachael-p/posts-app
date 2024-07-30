@@ -2,7 +2,7 @@ import { useStore } from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
 import { getAuthenticatedUser } from "@/lib/auth";
-import { login, logout } from "@/lib/api";
+import { login, logout, register } from "@/lib/api";
 
 // This custom hook, useMutationUser, is designed to manage user authentication-related state changes and handle login operations within our application. It encapsulates the logic for logging in a user and updating the global state accordingly.
 
@@ -10,6 +10,31 @@ function useMutationUser() {
   const { toast } = useToast();
   const setUser = useStore((state) => state.setUser);
   const clearUser = useStore((state) => state.clearUser);
+
+  const registerUser = async (
+    username: string,
+    password: string,
+    displayName: string,
+    avatar?: string,
+  ) => {
+    try {
+      await register(username, password, displayName, avatar);
+      toast({
+        variant: "default",
+        title: "Registration successful",
+        description: "Please login with your credentials.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to register",
+        description:
+          (error as Error).message ||
+          "There was an error registering you. Please try again later.",
+      });
+    }
+  };
+
 
   const loginUser = async (username: string, password: string) => {
     try {
@@ -51,7 +76,7 @@ function useMutationUser() {
     }
   }, []); // runs when component is mounted to check if the user is already authenticated 
 
-  return { loginUser, logoutUser };
+  return { registerUser, loginUser, logoutUser };
 }
 
 export default useMutationUser;

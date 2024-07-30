@@ -83,6 +83,31 @@ const handleError = (response: Response, message?: string) => {
   );
 };
 
+// Register a new user
+export const register = async (
+  username: string,
+  password: string,
+  displayName: string,
+  avatar?: string,
+): Promise<void> => {
+  const response = await fetch(`${API_URL}/users/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password, displayName, avatar }),
+  });
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      `Error: ${response.status} - ${
+        responseJson.message || response.statusText
+      }`,
+    );
+  }
+};
+
 // Login, store the token, and return the user
 export const login = async (
   username: string,
