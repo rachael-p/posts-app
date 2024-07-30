@@ -23,7 +23,7 @@ const Post = ({ post }: { post: PostWithUserData; }) => {
           timestamp={timestamp}
         />
         <div className="my-4">{content}</div>
-        <PostFooter postId={id} />
+        <PostFooter postId={id} username={username} />
       </div>
     </div>
   );

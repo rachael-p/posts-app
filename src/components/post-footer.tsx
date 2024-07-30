@@ -3,7 +3,7 @@ import { ChatBubbleIcon, HeartIcon } from "@radix-ui/react-icons";
 import PostActions from "./post-actions";
 import { useState } from "react";
 
-function PostFooter({ postId } : { postId: string; }) {
+function PostFooter({ postId, username } : { postId: string; username?: string; }) {
   const [likes, setLikes] = useState(0);
 
   return (
@@ -15,7 +15,7 @@ function PostFooter({ postId } : { postId: string; }) {
       <Button variant="ghost" size="sm">
         <ChatBubbleIcon className="w-5 h-5 opacity-50" />
       </Button>
-      <PostActions postId={postId} />
+      <PostActions postId={postId} username={username} />
     </div>
   );
 }

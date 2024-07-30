@@ -1,36 +1,50 @@
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import useMutationPosts from "@/hooks/use-mutation-posts";
+import { useStore } from "@/lib/store";
+import { useEffect, useState } from "react";
 
-const PostActions = ({ postId }: { postId: string }) => {
+const PostActions = ({
+  postId,
+  username,
+}: {
+  postId: string;
+  username?: string;
+}) => {
   const { deletePostById } = useMutationPosts();
+  const { user } = useStore((state) => state);
+  const [isOwner, setIsOwner] = useState(false);
+  
+
+  useEffect(() => {
+    if (user && user.username === username) {
+      setIsOwner(true);
+    } else {
+      setIsOwner(false);
+    }
+  }, [user, username]);
+  // called when user or username changes (either from change in user auth state or when component receives a diff post)
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-        >
-          <DotsHorizontalIcon className="w-4 h-4" />
-          <span className="sr-only">Open menu</span>
+        <Button variant="ghost" size="sm">
+          <DotsHorizontalIcon className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit post</DropdownMenuItem>
-        <DropdownMenuItem
-          className="text-red-500"
-          onClick={() => deletePostById(postId)}
-        >
-          Delete post
-        </DropdownMenuItem>
+      <DropdownMenuContent>
+        {isOwner && <DropdownMenuItem>Edit post</DropdownMenuItem>}
+        {isOwner && (
+          <DropdownMenuItem onClick={() => deletePostById(postId)}>
+            Delete post
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem>Copy link to post</DropdownMenuItem>
         <DropdownMenuItem className="text-red-500">
           Report post
