@@ -1,5 +1,5 @@
 import type { User, PostWithUserData, } from "@/lib/types";
-import { getAuthenticatedUser, getAuthenticatedUserToken, storeAuthenticatedUserToken } from "./auth";
+import { getAuthenticatedUser, getAuthenticatedUserToken, removeAuthenticatedUserToken, storeAuthenticatedUserToken } from "./auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -116,3 +116,11 @@ export const login = async (
   const user = getAuthenticatedUser();
   return user;
 };
+
+// Logout and clear the token
+export const logout = async (): Promise<void> => {
+  // You can send a request to the server to perform server-side logout
+  // Here we just clear the token
+  removeAuthenticatedUserToken();
+};
+

@@ -17,3 +17,9 @@ export const getAuthenticatedUserToken = (): string | null => {
 export const storeAuthenticatedUserToken = (token: string): void => {
   localStorage.setItem("token", token);
 };
+
+// Remove the token from local storage
+export const removeAuthenticatedUserToken = (): void => {
+  localStorage.removeItem("token");
+};
+
