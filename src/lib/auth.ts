@@ -23,3 +23,16 @@ export const removeAuthenticatedUserToken = (): void => {
   localStorage.removeItem("token");
 };
 
+// Function to check if the token is expired
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const decodedToken: { exp: number } = jwtDecode(token);
+    // extracts expiration timestamp from decoded jwt 
+    const currentTimestamp = Date.now() / 1000; // current time in seconds
+    return decodedToken.exp < currentTimestamp;   // if expiration timestamp is earlier than current timestamp
+  } catch (error) {
+    // If there's an error in decoding, assume the token is invalid/expired
+    return true;
+  }
+};
+

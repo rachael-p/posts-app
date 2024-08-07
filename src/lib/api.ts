@@ -28,11 +28,7 @@ export const deletePost = async (id: string): Promise<void> => {
   const responseJson = await response.json();
 
   if (!response.ok) {
-    throw new Error(
-      `Error: ${response.status} - ${
-        responseJson.message || response.statusText
-      }`,
-    );
+    handleError(response, responseJson.message);
   }
 };
 
@@ -58,10 +54,7 @@ export const createPost = async (
   const responseJson = await response.json();
 
   if (!response.ok) {
-    throw new Error(
-      `Error: ${response.status} - ${responseJson.message || response.statusText
-      }`,
-    );
+    handleError(response, responseJson.message);
   }
 
   return {
@@ -70,18 +63,6 @@ export const createPost = async (
   };
 };
 
-
-// Error handling
-const handleError = (response: Response, message?: string) => {
-  if (response.status === 401) {
-    removeAuthenticatedUserToken();
-    throw new Error("Your session has expired. Please login again.");
-  }
-
-  throw new Error(
-    `Error: ${response.status} - ${message || response.statusText}`,
-  );
-};
 
 // Register a new user
 export const register = async (
@@ -100,11 +81,7 @@ export const register = async (
   const responseJson = await response.json();
 
   if (!response.ok) {
-    throw new Error(
-      `Error: ${response.status} - ${
-        responseJson.message || response.statusText
-      }`,
-    );
+    handleError(response, responseJson.message);
   }
 };
 
@@ -124,11 +101,7 @@ export const login = async (
   const responseJson = await response.json();
 
   if (!response.ok) {
-    throw new Error(
-      `Error: ${response.status} - ${
-        responseJson.message || response.statusText
-      }`,
-    );
+    handleError(response, responseJson.message);
   }
 
   const { access_token } = responseJson.data;
@@ -149,3 +122,15 @@ export const logout = async (): Promise<void> => {
   removeAuthenticatedUserToken();
 };
 
+
+// Error handling
+const handleError = (response: Response, message?: string) => {
+  if (response.status === 401) {
+    removeAuthenticatedUserToken();
+    throw new Error("Your session has expired. Please login again.");
+  }
+
+  throw new Error(
+    `Error: ${response.status} - ${message || response.statusText}`,
+  );
+};
