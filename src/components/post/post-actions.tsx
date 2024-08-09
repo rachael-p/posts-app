@@ -9,6 +9,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import useMutationPosts from "@/hooks/use-mutation-posts";
 import { useStore } from "@/lib/store";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const PostActions = ({
   postId,
@@ -45,7 +46,9 @@ const PostActions = ({
             Delete post
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem>Copy link to post</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link to={`posts/${postId}`}>Link to post</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem className="text-red-500">
           Report post
         </DropdownMenuItem>

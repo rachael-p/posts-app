@@ -15,6 +15,19 @@ export const fetchPosts = async (): Promise<PostWithUserData[]> => {
 };
 
 
+// Fetch a post given its id
+export const fetchPostById = async (id: string): Promise<PostWithUserData> => {
+  const response = await fetch(`${API_URL}/posts/${id}?withUserData=true`);
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+
+  return responseJson.data;
+};
+
+
 // Delete post by id
 export const deletePost = async (id: string): Promise<void> => {
   const token = getAuthenticatedUserToken();
@@ -31,7 +44,6 @@ export const deletePost = async (id: string): Promise<void> => {
     handleError(response, responseJson.message);
   }
 };
-
 
 
 // Create a post
