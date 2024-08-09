@@ -4,7 +4,7 @@ import {
 } from "@radix-ui/react-icons";
 
 import { Button } from "./ui/button";
-import { AddPostDialog } from "./add-post-dialog";
+import { AddPostDialog } from "./post/add-post-dialog";
 
 const Sidebar = () => {
   return (

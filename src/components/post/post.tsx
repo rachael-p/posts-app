@@ -4,9 +4,9 @@ import PostFooter from "./post-footer";
 import type { PostWithUserData } from "@/lib/types";
 
 const Post = ({ post }: { post: PostWithUserData; }) => {
-    const { id, content, user, timestamp } = post;
+  const { content, user, timestamp } = post;
 
-    // The code below uses Optional Chaining (?.) and Nullish Coalescing (??)
+  // The code below uses Optional Chaining (?.) and Nullish Coalescing (??)
   const displayName = user?.displayName ?? "Unknown";
   const username = user?.username ?? "Unknown";
   const avatar = user?.avatar;
@@ -23,7 +23,7 @@ const Post = ({ post }: { post: PostWithUserData; }) => {
           timestamp={timestamp}
         />
         <div className="my-4">{content}</div>
-        <PostFooter postId={id} username={username} />
+        <PostFooter post={post} username={username} />
       </div>
     </div>
   );

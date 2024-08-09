@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useMutationPosts from "@/hooks/use-mutation-posts";
 import { useToast } from "@/components/ui/use-toast";

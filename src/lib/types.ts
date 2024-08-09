@@ -30,3 +30,6 @@ export type User = {
   };
   
   export type PostWithUserData = Post & { user?: User };
+
+  export type CommentWithUserData = Comment & { user?: User };
+

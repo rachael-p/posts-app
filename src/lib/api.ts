@@ -1,4 +1,4 @@
-import type { User, PostWithUserData, } from "@/lib/types";
+import type { User, PostWithUserData, CommentWithUserData, } from "@/lib/types";
 import { getAuthenticatedUser, getAuthenticatedUserToken, removeAuthenticatedUserToken, storeAuthenticatedUserToken } from "./auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -133,4 +133,56 @@ const handleError = (response: Response, message?: string) => {
   throw new Error(
     `Error: ${response.status} - ${message || response.statusText}`,
   );
+};
+
+
+// Fetch all comments for a post
+export const fetchComments = async (postId: string): Promise<CommentWithUserData[]> => {
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(
+    `${API_URL}/posts/${postId}/comments?withUserData=true`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+
+  return responseJson.data;
+};
+
+
+// Create a new comment
+export const createComment = async (
+  postId: string,
+  content: string,
+): Promise<CommentWithUserData> => {
+  const user = getAuthenticatedUser();
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(`${API_URL}/posts/${postId}/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ content }),
+  });
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+
+  return {
+    ...responseJson.data,
+    user,
+  };
 };

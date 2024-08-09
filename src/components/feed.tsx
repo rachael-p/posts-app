@@ -1,5 +1,5 @@
 import Header from "./header";
-import Posts from "./posts";
+import Posts from "./post/posts";
 
 const Feed = () => {
   return (
